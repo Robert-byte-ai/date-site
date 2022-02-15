@@ -20,10 +20,6 @@ class UserListSerializer(serializers.ModelSerializer):
             'last_name',
             'gender',
             'avatar',
-            'longitude',
-            'latitude',
-            'username',
-            'password'
         )
         model = User
 
