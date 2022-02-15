@@ -6,7 +6,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .utils import distance_1
 from django.db.models import F, ExpressionWrapper, FloatField
 
 from .models import User, Match
@@ -15,6 +14,7 @@ from .serializers import (
     UserRegisterSerializer,
     MatchSerializer
 )
+from .utils import distance_1
 
 
 class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

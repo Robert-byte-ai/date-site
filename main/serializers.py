@@ -20,6 +20,8 @@ class UserListSerializer(serializers.ModelSerializer):
             'last_name',
             'gender',
             'avatar',
+            'pk',
+            'username'
         )
         model = User
 
@@ -29,7 +31,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Match
-        fields = ('user',)
+        fields = ('user', 'liked_user')
 
     validators = [
         UniqueTogetherValidator(
