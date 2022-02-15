@@ -2,8 +2,9 @@ from PIL import Image
 from rembg.bg import remove
 import numpy as np
 import io
-from date_site import settings
 from django.db.models.functions import Radians, Cos, Sin, ASin, Sqrt
+
+from date_site import settings
 
 
 def add_watermark(image,):
