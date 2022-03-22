@@ -26,8 +26,7 @@ class UserViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     def get_queryset(self,):
         user = self.request.user
         queryset = User.objects.exclude(username=user.username)
-        distance = self.request.query_params.get('distance')
-        if distance:
+        if distance := self.request.query_params.get('distance'):
             queryset = queryset.annotate(
                 dis=ExpressionWrapper(
                     distance_1(
@@ -54,13 +53,22 @@ class MatchViewSet(APIView):
     def post(self, request, pk=None):
         user = request.user
         liked_user = get_object_or_404(User, pk=self.kwargs['pk'])
-        serializer = MatchSerializer(data=request.data, context={"request": request})
+        serializer = MatchSerializer(
+            data=request.data,
+            context={"request": request}
+        )
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            if Match.objects.filter(user=liked_user, liked_user=user).exists():
+            if Match.objects.filter(
+                    user=liked_user,
+                    liked_user=user
+            ).exists():
                 self.send_notification(liked_user, user)
                 self.send_notification(user, liked_user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
         return Response(serializer.errors)
 
     def send_notification(self, user1, user2):
